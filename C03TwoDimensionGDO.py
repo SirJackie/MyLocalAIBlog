@@ -36,5 +36,28 @@ def TestGradientCalculators():
     print(GetGradient(MyFunction, -10, -10))
 
 
+if __name__ == "__main_":
+    print(GetGradient(MyFunction, -10, -10))
+
+
 if __name__ == "__main__":
-    TestGradientCalculators()
+    expectedX = 2
+    expectedY = 4
+    expectedZ = MyFunction(expectedX, expectedY)  # 0.0
+
+    currentX = -10
+    currentY = -10
+    learningRate = 1
+
+    for i in range(0, 5000):
+        gradient = GetGradient(MyFunction, currentX, currentY)
+        print(currentX, currentY, gradient)
+        currentX += -gradient[0] * learningRate
+        currentY += -gradient[1] * learningRate
+
+    finalX = currentX
+    finalY = currentY
+    finalZ = MyFunction(finalX, finalY)
+    print("finalX: %.5f; expectedX: %.5f; errorX: %.5f" % (finalX, expectedX, abs(finalX - expectedX)))
+    print("finalY: %.5f; expectedY: %.5f; errorY: %.5f" % (finalY, expectedY, abs(finalY - expectedY)))
+    print("finalZ: %.5f; expectedZ: %.5f; errorZ: %.5f" % (finalZ, expectedZ, abs(finalZ - expectedZ)))
