@@ -10,5 +10,17 @@ def MyFunction(x, y):
     )
 
 
-print(MyFunction(2, 4))
-print(MyFunction(-10, -10))
+def GetXDirectionDerivative(function, fixedY, x, dx=0.001):
+    dz = function(x + dx, fixedY) - function(x, fixedY)
+    return dz / dx
+
+
+def GetYDirectionDerivative(function, fixedX, y, dy=0.001):
+    dz = function(fixedX, y + dy) - function(fixedX, y)
+    return dz / dy
+
+
+# print(MyFunction(2, 4))
+# print(MyFunction(-10, -10))
+print(GetXDirectionDerivative(MyFunction, -10, -10))
+print(GetYDirectionDerivative(MyFunction, -10, -10))
