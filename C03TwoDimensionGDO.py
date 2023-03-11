@@ -1,11 +1,11 @@
 from math import sqrt, fabs
 
 
-# z = 100 - sqrt(abs( 10000 + ( 1 - (x-2)^2 - (y-4)^2 ) ))
+# z = 100 - sqrt(abs( 10000 - (x-2)^2 - (y-4)^2 ))
 def MyFunction(x, y):
     return 100 - sqrt(
         fabs(
-            10000 + (1 - (x-2)**2 - (y-4)**2)
+            10000 - (x-2)**2 - (y-4)**2
         )
     )
 
