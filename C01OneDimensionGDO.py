@@ -1,31 +1,28 @@
-def myFunction(x):
+# f(x) = 2x^2 + x + 3
+# Minimum: x = -0.25
+# f(-0.25) = 2.875
+
+
+def MyFunction(x):
     return 2*x**2 + x + 3
 
 
-def getGradient(myFunction, x, dx=0.001):
-    dy = myFunction(x + dx) - myFunction(x)
+def GetGradient(MyFunction, x, dx=0.001):
+    dy = MyFunction(x + dx) - MyFunction(x)
     return dy / dx
 
 
-currentX = 9.8
-learningRate = 0.01
-resultX = []
-resultG = []
+if __name__ == "__main__":
+    expectedX = -0.25
+    expectedY = MyFunction(expectedX)  # 2.875
+    currentX = 10000
+    learningRate = 0.1
 
+    for i in range(0, 500):
+        gradient = GetGradient(MyFunction, currentX)
+        currentX += -gradient * learningRate
 
-for i in range(500):
-    resultX.append(currentX)
-    gradient = getGradient(myFunction, currentX)
-    resultG.append(gradient)
-    currentX -= gradient * learningRate
-
-
-finalX = resultX.pop()
-finalY = myFunction(finalX)
-error = finalY - myFunction(-0.25)
-print("xHat: %.5f, xReal: %.5f" % (finalX, 0.25))
-print("yHat: %.5f, yReal: %.5f" % (finalY, myFunction(finalX)))
-print("error: %.5f" % error)
-
-
-print(resultX)
+    finalX = currentX
+    finalY = MyFunction(finalX)
+    print("finalX: %.5f; expectedX: %.5f; errorX: %.5f" % (finalX, expectedX, abs(finalX - expectedX)))
+    print("finalY: %.5f; expectedY: %.5f; errorY: %.5f" % (finalY, expectedY, abs(finalY - expectedY)))
