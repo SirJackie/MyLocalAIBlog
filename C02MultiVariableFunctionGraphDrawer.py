@@ -12,14 +12,21 @@ ax = Axes3D(figure, auto_add_to_figure=False)
 figure.add_axes(ax)
 
 # 生成x, y 的坐标集 (-2,2) 区间，间隔为 0.1
-x = np.arange(-2, 2, 0.1)
-y = np.arange(-2, 2, 0.1)
+x = np.arange(-10, 10.1, 0.5)
+y = np.arange(-10, 10.1, 0.5)
 
 # 生成网格举证
 X, Y = np.meshgrid(x, y)
 
 # Z 轴 函数
-Z = np.power(1 - X, 2) + 100 * np.power((Y - np.power(x, 2)), 2)
+# Z = np.power(1 - X, 2) + 100 * np.power((Y - np.power(x, 2)), 2)
+
+# z = 100 - sqrt(abs( 10000 + ( 1 - (x-2)^2 - (y-4)^2 ) ))
+Z = 100 - np.sqrt(
+    np.abs(
+        10000 + (1 - np.power(X-2, 2) - np.power(Y-4, 2))
+    )
+)
 
 # 定义x,y 轴名称
 plt.xlabel("x")
