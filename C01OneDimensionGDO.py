@@ -8,17 +8,24 @@ def getGradient(myFunction, x, dx=0.001):
 
 
 currentX = 9.8
-learningRate = 0.0001
+learningRate = 0.01
 resultX = []
 resultG = []
 
-for i in range(500000):
+
+for i in range(500):
     resultX.append(currentX)
     gradient = getGradient(myFunction, currentX)
     resultG.append(gradient)
     currentX -= gradient * learningRate
 
+
 finalX = resultX.pop()
 finalY = myFunction(finalX)
 error = finalY - myFunction(-0.25)
-print(finalX, finalY, error)
+print("xHat: %.5f, xReal: %.5f" % (finalX, 0.25))
+print("yHat: %.5f, yReal: %.5f" % (finalY, myFunction(finalX)))
+print("error: %.5f" % error)
+
+
+print(resultX)
