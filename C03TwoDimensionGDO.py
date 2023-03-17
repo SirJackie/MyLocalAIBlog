@@ -8,12 +8,12 @@ def MyFunction(x, y):
     )
 
 
-def GetXDirectionDerivative(function, fixedY, x, dx=0.001):
+def GetXDirectionDerivative(function, fixedY, x, dx=0.00001):
     dz = function(x + dx, fixedY) - function(x, fixedY)
     return dz / dx
 
 
-def GetYDirectionDerivative(function, fixedX, y, dy=0.001):
+def GetYDirectionDerivative(function, fixedX, y, dy=0.00001):
     dz = function(fixedX, y + dy) - function(fixedX, y)
     return dz / dy
 
@@ -34,11 +34,11 @@ def TestGradientCalculators():
     print(GetGradient(MyFunction, -10, -10))
 
 
-if __name__ == "__main_":
-    print(GetGradient(MyFunction, -10, -10))
-
-
 if __name__ == "__main__":
+    print(GetGradient(MyFunction, 0, 0))
+
+
+if __name__ == "__main_":
     expectedX = 2
     expectedY = 4
     expectedZ = MyFunction(expectedX, expectedY)  # 0.0
