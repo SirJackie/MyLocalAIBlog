@@ -1,12 +1,10 @@
-from math import sqrt, fabs
+from math import sqrt
 
 
-# z = 100 - sqrt(abs( 10000 - (x-2)^2 - (y-4)^2 ))
+# z = sqrt(x*x + y*y)
 def MyFunction(x, y):
-    return 100 - sqrt(
-        fabs(
-            10000 - (x-2)**2 - (y-4)**2
-        )
+    return sqrt(
+        x*x + y*y
     )
 
 
