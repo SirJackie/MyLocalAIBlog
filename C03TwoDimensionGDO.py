@@ -8,14 +8,14 @@ def MyFunction(x, y):
     )
 
 
-def GetXDirectionDerivative(function, fixedY, x, dx=0.00001):
-    dz = function(x + dx, fixedY) - function(x, fixedY)
-    return dz / dx
+def GetXDirectionDerivative(function, fixedY, x, dx=0.001):
+    dz = function(x + dx, fixedY) - function(x - dx, fixedY)
+    return dz / (2 * dx)
 
 
-def GetYDirectionDerivative(function, fixedX, y, dy=0.00001):
-    dz = function(fixedX, y + dy) - function(fixedX, y)
-    return dz / dy
+def GetYDirectionDerivative(function, fixedX, y, dy=0.001):
+    dz = function(fixedX, y + dy) - function(fixedX, y - dy)
+    return dz / (2 * dy)
 
 
 def GetGradient(function, x, y):
