@@ -1,11 +1,9 @@
 from math import sqrt
 
 
-# z = sqrt(x*x + y*y)
+# z = x*x + y*y
 def MyFunction(x, y):
-    return sqrt(
-        x*x + y*y
-    )
+    return x*x + y*y
 
 
 def GetXDirectionDerivative(function, fixedY, x, dx=0.001):

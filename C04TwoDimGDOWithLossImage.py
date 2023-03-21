@@ -4,11 +4,9 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 
-# z = sqrt(x*x + y*y)
+# z = x*x + y*y
 def MyFunction(x, y):
-    return sqrt(
-        x*x + y*y
-    )
+    return x*x + y*y
 
 
 def GetXDirectionDerivative(function, fixedY, x, dx=0.001):
@@ -90,8 +88,8 @@ if __name__ == "__main__":
     X, Y = np.meshgrid(x, y)
 
     # Z 轴 函数
-    # z = sqrt(x*x + y*y)
-    Z = np.sqrt(X * X + Y * Y)
+    # z = x*x + y*y
+    Z = X * X + Y * Y
 
     # 定义x,y 轴名称
     plt.xlabel("x")
@@ -105,7 +103,7 @@ if __name__ == "__main__":
     ax.plot(xs=xHis, ys=yHis, zs=zHis, c="g", marker="X")
 
     # 绘制曲面
-    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap="rainbow", alpha=0.7)
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap="rainbow", alpha=0.5)
 
     # 展示
     plt.show()

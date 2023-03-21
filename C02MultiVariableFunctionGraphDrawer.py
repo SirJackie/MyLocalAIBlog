@@ -21,8 +21,8 @@ X, Y = np.meshgrid(x, y)
 # Z 轴 函数
 # Z = np.power(1 - X, 2) + 100 * np.power((Y - np.power(x, 2)), 2)
 
-# z = sqrt(x*x + y*y)
-Z = np.sqrt(X*X + Y*Y)
+# z = x*x + y*y
+Z = X*X + Y*Y
 
 # 定义x,y 轴名称
 plt.xlabel("x")
