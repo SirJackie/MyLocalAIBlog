@@ -39,8 +39,8 @@ optimizer = optim.SGD(net.parameters(), lr=0.01)
 # 训练模型
 for epoch in range(1000):
     # 前向传播
-    output = net(x_train)
-    loss = criterion(output, y_train)
+    y_hat = net(x_train)
+    loss = criterion(y_hat, y_train)
 
     # 反向传播
     optimizer.zero_grad()
@@ -48,7 +48,7 @@ for epoch in range(1000):
     optimizer.step()
 
     if epoch % 100 == 0:
-        print('Epoch [{}/{}], Loss: {:.4f}'.format(epoch + 1, 1000, loss.item()))
+        print('Epoch [%s/%s], Loss: %s' % (epoch + 1, 1000, loss.item()))
         # loss.item()是用来获取张量loss中的单个数值的函数。
 
 # 使用模型进行预测
