@@ -13,7 +13,7 @@ y_train = torch.randn(10, 4)
 # 定义神经网络模型
 class Net(nn.Module):
     def __init__(self):
-        super(Net, self).__init__()
+        super().__init__()
         self.fc1 = nn.Linear(5, 7)
         self.fc2 = nn.Linear(7, 7)
         self.fc3 = nn.Linear(7, 4)
