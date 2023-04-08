@@ -41,3 +41,10 @@ for i in range(0, 1000):
 
     if i % 100 == 99:
         print("Epoch: [%s/%s]; Loss: %s" % (i+1, 1000, loss.item()))
+
+
+# Prediction
+x_test = torch.randn(3, 5)
+with torch.no_grad():
+    y_hat = net(x_test)
+    print(y_hat)
