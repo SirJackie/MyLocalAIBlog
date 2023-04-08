@@ -6,10 +6,12 @@ import torch
 
 ```python
 # 创建张量
+torch.tensor(alist, dtype=torch.float)  # 转换Python列表为张量
 torch.rand(N)   # 随机数
 torch.randn(N)  # 正态分布随机数，可用于噪声生成
 torch.zeros(N)  # 填充0
 torch.ones(N)   # 填充1
+tensor[i:j]     # 切片操作
 torch.linspace(0, 1, 100)  # 0到1，切成100份
 ```
 
@@ -26,6 +28,19 @@ w.mean()    # 计算张量分量的平均数
 ```python
 # 表达式的属性和方法
 exp.backward()  # 反向触发所有梯度计算（autograd机制）
+```
+
+独热编码：
+
+```python
+import torch
+import torch.nn.functional as nn_func
+
+alist = [0, 0, 0, 1, 1, 2]
+tensor = torch.tensor(alist)
+tensor_long = tensor.long()  # 将标签张量转换为长整型
+tensor_one_hot = nn_func.one_hot(tensor_long, num_classes=3)
+print(tensor_one_hot)
 ```
 
 # Matplotlib APIs
