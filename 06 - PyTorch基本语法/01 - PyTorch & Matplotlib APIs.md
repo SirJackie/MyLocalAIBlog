@@ -44,6 +44,20 @@ tensor_one_hot = nn_func.one_hot(tensor_long, num_classes=3)
 print(tensor_one_hot)
 ```
 
+反独热编码：
+
+```
+one_hot = torch.tensor([0, 0, 1], dtype=torch.long)
+de_one_hot = torch.argmax(one_hot).item()
+```
+
+四舍五入：
+
+```
+x = torch.tensor([0.1, 0.9, 0.1])
+rounded = torch.round(x)
+```
+
 # Matplotlib APIs
 
 ```python
