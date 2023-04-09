@@ -8,9 +8,10 @@ from sklearn.datasets import load_boston
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(13, 26)
-        self.fc2 = nn.Linear(26, 26)
-        self.fc3 = nn.Linear(26, 1)
+        self.fc1 = nn.Linear(13, 100)
+        self.fc2 = nn.Linear(100, 100)
+        self.fc3 = nn.Linear(100, 100)
+        self.fc4 = nn.Linear(100, 1)
         self.relu = nn.ReLU()
 
     def forward(self, x):
@@ -19,6 +20,8 @@ class Net(nn.Module):
         x = self.fc2(x)
         x = self.relu(x)
         x = self.fc3(x)
+        x = self.relu(x)
+        x = self.fc4(x)
         return x
 
 
@@ -34,10 +37,10 @@ y_train = torch.unsqueeze(target, 1)
 # Define Network Stuff
 net = Net()
 criterion = nn.MSELoss()
-optimizer = optim.Adam(net.parameters(), lr=0.01)
+optimizer = optim.Adam(net.parameters(), lr=0.005)
 
 # Train
-for i in range(0, 5000):
+for i in range(0, 10000):
     y_hat = net(x_train)
     loss = criterion(y_hat, y_train)
 
@@ -46,7 +49,7 @@ for i in range(0, 5000):
     optimizer.step()
 
     if i % 100 == 99:
-        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 5000, loss.item()))
+        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 10000, loss.item()))
 
 # Save
 torch.save(net.state_dict(), "M05BostonHousing.pth")

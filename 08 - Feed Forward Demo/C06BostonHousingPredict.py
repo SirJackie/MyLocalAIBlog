@@ -9,9 +9,10 @@ from math import fabs
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(13, 26)
-        self.fc2 = nn.Linear(26, 26)
-        self.fc3 = nn.Linear(26, 1)
+        self.fc1 = nn.Linear(13, 100)
+        self.fc2 = nn.Linear(100, 100)
+        self.fc3 = nn.Linear(100, 100)
+        self.fc4 = nn.Linear(100, 1)
         self.relu = nn.ReLU()
 
     def forward(self, x):
@@ -20,6 +21,8 @@ class Net(nn.Module):
         x = self.fc2(x)
         x = self.relu(x)
         x = self.fc3(x)
+        x = self.relu(x)
+        x = self.fc4(x)
         return x
 
 
@@ -36,6 +39,9 @@ y_train = torch.unsqueeze(target, 1)
 net = Net()
 net.load_state_dict(torch.load("M05BostonHousing.pth"))
 
+succeededCount = 0
+failedCount = 0
+
 # Test
 with torch.no_grad():
     y_hat = net(x_train)
@@ -46,5 +52,9 @@ with torch.no_grad():
 
         if fabs(hat - train) <= 3.5:
             print("Succeeded. Hat: %.4f; Train: %.4f; Loss: %.4f" % (hat, train, fabs(hat - train)))
+            succeededCount += 1
         else:
             print("Failed. Hat: %.4f; Train: %.4f; Loss: %.4f" % (hat, train, fabs(hat - train)))
+            failedCount += 1
+
+print("Succeeded:", succeededCount, "Failed:", failedCount)
