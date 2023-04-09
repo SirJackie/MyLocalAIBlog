@@ -15,3 +15,17 @@ test_dataset = datasets.MNIST(root='./data', train=False, download=True, transfo
 # 创建数据加载器
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
 test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64, shuffle=False)
+
+# 显示数据集
+
+# 遍历训练集数据加载器，获取一个批次的数据
+for data, target in train_loader:
+    # Data's Shape: (batch_size, num_channels, height, width)
+    # Target's Shape: (batch_size,)
+    print("Train: ", data.shape, target.shape)
+
+# 遍历测试集数据加载器，获取一个批次的数据
+for data, target in test_loader:
+    # Data's Shape: (batch_size, num_channels, height, width)
+    # Target's Shape: (batch_size,)
+    print("Test: ", data.shape, target.shape)
