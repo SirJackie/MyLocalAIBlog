@@ -4,7 +4,6 @@ import torch.optim as optim
 
 
 class Net(nn.Module):
-
     def __init__(self):
         super().__init__()
         self.fc1 = nn.Linear(5, 7)
@@ -29,7 +28,6 @@ y_train = torch.randn(10, 4)
 criterion = nn.MSELoss()
 optimizer = optim.SGD(net.parameters(), lr=0.01)
 
-
 # Iteration
 for i in range(0, 1000):
     y_hat = net(x_train)
@@ -42,9 +40,8 @@ for i in range(0, 1000):
     if i % 100 == 99:
         print("Epoch: [%s/%s]; Loss: %s" % (i+1, 1000, loss.item()))
 
-
 # Prediction
 x_test = torch.randn(3, 5)
 with torch.no_grad():
-    y_hat = net(x_test)
-    print(y_hat)
+    y_test = net(x_test)
+    print(y_test)
