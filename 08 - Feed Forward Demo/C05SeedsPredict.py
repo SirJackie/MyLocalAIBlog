@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as nn_func
-from sklearn.datasets import load_breast_cancer
+import json
 
 
 def one_hot_decoder(one_hot):
@@ -12,9 +12,9 @@ def one_hot_decoder(one_hot):
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(30, 60)
-        self.fc2 = nn.Linear(60, 60)
-        self.fc3 = nn.Linear(60, 2)
+        self.fc1 = nn.Linear(7, 14)
+        self.fc2 = nn.Linear(14, 14)
+        self.fc3 = nn.Linear(14, 3)
         self.relu = nn.ReLU()
 
     def forward(self, x):
@@ -26,20 +26,23 @@ class Net(nn.Module):
         return x
 
 
-# Load Breast Cancer
-cancer_data = load_breast_cancer()
+# Load Seeds
+seeds_data = None
+with open("D01Seeds.json", "rb") as f:
+    seeds_data = f.read().decode("utf-8")
+    seeds_data = json.loads(seeds_data)
 
-data = torch.tensor(cancer_data.data, dtype=torch.float)
-target = torch.tensor(cancer_data.target, dtype=torch.long)
+data = torch.tensor(seeds_data["data"], dtype=torch.float)
+target = torch.tensor(seeds_data["target"], dtype=torch.long)
 
 x_train = data
-y_train = nn_func.one_hot(target, num_classes=2).float()
+y_train = nn_func.one_hot(target, num_classes=3).float()
 
 # Define Network Stuff
 net = Net()
-net.load_state_dict(torch.load("M03BreastCancer.pth"))
+net.load_state_dict(torch.load("M04Seeds.pth"))
 
-# Test
+# Predict
 with torch.no_grad():
     y_hat = net(x_train)
 

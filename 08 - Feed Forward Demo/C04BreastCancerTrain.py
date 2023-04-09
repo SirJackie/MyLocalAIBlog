@@ -26,7 +26,7 @@ class Net(nn.Module):
         return x
 
 
-# Load Wine
+# Load Breast Cancer
 cancer_data = load_breast_cancer()
 
 data = torch.tensor(cancer_data.data, dtype=torch.float)

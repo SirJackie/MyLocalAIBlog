@@ -1,18 +1,60 @@
-import pandas as pd
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as nn_func
+import json
 
-# 从CSV文件中加载Seeds数据集
-# url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/00236/seeds_dataset.txt'
-url = './seeds_dataset.txt'  # Localized Dataset File
-seeds_data = pd.read_csv(url, header=None, delim_whitespace=True)
 
-# 获取特征和目标数据
-description = '''The Seeds dataset is a well-known dataset used in machine learning and pattern recognition research. It contains measurements of different geometrical properties of three different types of wheat seeds: Kama, Rosa, and Canadian.
-The dataset consists of seven different attributes or features of each seed, including area, perimeter, compactness, length of kernel, width of kernel, asymmetry coefficient, and length of kernel groove. These features were measured from digital images of the seeds taken with a high-resolution camera.
-There are a total of 210 instances or samples in the dataset, with 70 samples for each of the three wheat seed types. The dataset is commonly used to test classification algorithms and to explore the relationship between the different features and the type of seed.
-The Seeds dataset is a popular benchmark for comparing different machine learning models, and it has been used in numerous research papers and studies. It is freely available online and can be easily downloaded for use in various machine learning and data analysis projects.'''
-data = seeds_data.iloc[:, :-1].values
-target = seeds_data.iloc[:, -1].values
+def one_hot_decoder(one_hot):
+    return torch.argmax(one_hot).item()
 
-print(description)
-print(data)
-print(target - 1)
+
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(7, 14)
+        self.fc2 = nn.Linear(14, 14)
+        self.fc3 = nn.Linear(14, 3)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        x = self.relu(x)
+        x = self.fc3(x)
+        return x
+
+
+# Load Seeds
+seeds_data = None
+with open("D01Seeds.json", "rb") as f:
+    seeds_data = f.read().decode("utf-8")
+    seeds_data = json.loads(seeds_data)
+
+data = torch.tensor(seeds_data["data"], dtype=torch.float)
+target = torch.tensor(seeds_data["target"], dtype=torch.long)
+
+x_train = data
+y_train = nn_func.one_hot(target, num_classes=3).float()
+
+# Define Network Stuff
+net = Net()
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(net.parameters(), lr=0.01)
+
+# Train
+for i in range(0, 10000):
+    y_hat = net(x_train)
+    loss = criterion(y_hat, y_train)
+
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    if i % 1000 == 999:
+        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 10000, loss.item()))
+
+# Save
+torch.save(net.state_dict(), "M04Seeds.pth")
+
