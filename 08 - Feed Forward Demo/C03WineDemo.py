@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as nn_func
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_wine
 
 
 def one_hot_decoder(one_hot):
@@ -12,9 +12,9 @@ def one_hot_decoder(one_hot):
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(4, 7)
-        self.fc2 = nn.Linear(7, 7)
-        self.fc3 = nn.Linear(7, 3)
+        self.fc1 = nn.Linear(13, 26)
+        self.fc2 = nn.Linear(26, 26)
+        self.fc3 = nn.Linear(26, 3)
         self.relu = nn.ReLU()
 
     def forward(self, x):
@@ -26,11 +26,11 @@ class Net(nn.Module):
         return x
 
 
-# Load Iris
-iris_data = load_iris()
+# Load Wine
+wine_data = load_wine()
 
-data = torch.tensor(iris_data.data, dtype=torch.float)
-target = torch.tensor(iris_data.target, dtype=torch.long)
+data = torch.tensor(wine_data.data, dtype=torch.float)
+target = torch.tensor(wine_data.target, dtype=torch.long)
 
 x_train = data
 y_train = nn_func.one_hot(target, num_classes=3).float()
@@ -38,10 +38,10 @@ y_train = nn_func.one_hot(target, num_classes=3).float()
 # Define Network Stuff
 net = Net()
 criterion = nn.MSELoss()
-optimizer = optim.SGD(net.parameters(), lr=0.01)
+optimizer = optim.Adam(net.parameters(), lr=0.01)
 
 # Train
-for i in range(0, 10000):
+for i in range(0, 6000):
     y_hat = net(x_train)
     loss = criterion(y_hat, y_train)
 
@@ -50,10 +50,10 @@ for i in range(0, 10000):
     optimizer.step()
 
     if i % 1000 == 999:
-        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 10000, loss.item()))
+        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 6000, loss.item()))
 
 # Save
-torch.save(net.state_dict(), "M01Iris.pth")
+torch.save(net.state_dict(), "M02Wine.pth")
 
 # Test
 with torch.no_grad():
