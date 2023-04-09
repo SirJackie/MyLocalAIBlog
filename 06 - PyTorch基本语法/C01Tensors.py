@@ -17,3 +17,6 @@ print(normal_tensor)
 
 sliced_tensor = normal_tensor[:3]
 print(sliced_tensor)
+
+random_list = random_tensor.tolist()
+print(random_list)

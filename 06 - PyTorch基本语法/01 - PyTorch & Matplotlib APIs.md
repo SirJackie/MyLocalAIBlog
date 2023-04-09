@@ -7,6 +7,7 @@ import torch
 ```python
 # 创建张量
 torch.tensor(alist, dtype=torch.float)  # 转换Python列表为张量
+alist = tensor.tolist()                 # 转换张量为Python列表
 torch.rand(N)   # 随机数
 torch.randn(N)  # 正态分布随机数，可用于噪声生成
 torch.zeros(N)  # 填充0
