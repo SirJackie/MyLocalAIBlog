@@ -37,8 +37,8 @@ y_train = nn_func.one_hot(target, num_classes=3).float()
 
 # Define Network Stuff
 net = Net()
-criterion = nn.MSELoss()
-optimizer = optim.SGD(net.parameters(), lr=0.01)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(net.parameters(), lr=0.01)
 
 # Train
 for i in range(0, 10000):

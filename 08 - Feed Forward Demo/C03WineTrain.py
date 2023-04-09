@@ -37,11 +37,11 @@ y_train = nn_func.one_hot(target, num_classes=3).float()
 
 # Define Network Stuff
 net = Net()
-criterion = nn.MSELoss()
+criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr=0.01)
 
 # Train
-for i in range(0, 6000):
+for i in range(0, 10000):
     y_hat = net(x_train)
     loss = criterion(y_hat, y_train)
 
@@ -50,7 +50,7 @@ for i in range(0, 6000):
     optimizer.step()
 
     if i % 1000 == 999:
-        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 6000, loss.item()))
+        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 10000, loss.item()))
 
 # Save
 torch.save(net.state_dict(), "M02Wine.pth")
