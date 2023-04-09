@@ -60,9 +60,9 @@ rounded = torch.round(x)
 
 转换维度：
 
-```
-y_train = torch.unsqueeze(target, 1)
-# target: (506, ); y_train: (506, 1)
+```python
+y_train = torch.unsqueeze(target, 1)  # target: (506, ); y_train: (506, 1)
+target = torch.squeeze(y_train)       # y_train: (506, 1); target: (506, )
 ```
 
 # Matplotlib APIs
