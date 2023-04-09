@@ -58,6 +58,13 @@ x = torch.tensor([0.1, 0.9, 0.1])
 rounded = torch.round(x)
 ```
 
+转换维度：
+
+```
+y_train = torch.unsqueeze(target, 1)
+# target: (506, ); y_train: (506, 1)
+```
+
 # Matplotlib APIs
 
 ```python

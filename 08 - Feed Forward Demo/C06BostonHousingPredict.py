@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as nn_func
 from sklearn.datasets import load_boston
+from math import fabs
 
 
 class Net(nn.Module):
@@ -33,20 +34,17 @@ y_train = torch.unsqueeze(target, 1)
 
 # Define Network Stuff
 net = Net()
-criterion = nn.MSELoss()
-optimizer = optim.Adam(net.parameters(), lr=0.01)
+net.load_state_dict(torch.load("M05BostonHousing.pth"))
 
-# Train
-for i in range(0, 5000):
+# Test
+with torch.no_grad():
     y_hat = net(x_train)
-    loss = criterion(y_hat, y_train)
 
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
+    for i in range(0, len(y_hat)):
+        hat = y_hat[i].item()
+        train = y_train[i].item()
 
-    if i % 100 == 99:
-        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 5000, loss.item()))
-
-# Save
-torch.save(net.state_dict(), "M05BostonHousing.pth")
+        if fabs(hat - train) <= 3.5:
+            print("Succeeded. Hat: %.4f; Train: %.4f; Loss: %.4f" % (hat, train, fabs(hat - train)))
+        else:
+            print("Failed. Hat: %.4f; Train: %.4f; Loss: %.4f" % (hat, train, fabs(hat - train)))
