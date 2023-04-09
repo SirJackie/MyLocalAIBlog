@@ -35,22 +35,19 @@ target = torch.tensor(wine_data.target, dtype=torch.long)
 x_train = data
 y_train = nn_func.one_hot(target, num_classes=3).float()
 
-# Define Network Stuff
+# Load Network
 net = Net()
-criterion = nn.MSELoss()
-optimizer = optim.Adam(net.parameters(), lr=0.01)
+net.load_state_dict(torch.load("M02Wine.pth"))
 
-# Train
-for i in range(0, 6000):
+# Test
+with torch.no_grad():
     y_hat = net(x_train)
-    loss = criterion(y_hat, y_train)
 
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
+    for i in range(0, len(y_hat)):
+        hat = one_hot_decoder(y_hat[i])
+        train = one_hot_decoder(y_train[i])
 
-    if i % 1000 == 999:
-        print("Epoch: [%s/%s]; Loss: %s" % (i+1, 6000, loss.item()))
-
-# Save
-torch.save(net.state_dict(), "M02Wine.pth")
+        if hat == train:
+            print("Succeeded. Hat: %s; Train: %s; HatOH: %s; TrainOH: %s" % (hat, train, y_hat[i], y_train[i]))
+        else:
+            print("Failed. Hat: %s; Train: %s; HatOH: %s; TrainOH: %s" % (hat, train, y_hat[i], y_train[i]))
