@@ -9,8 +9,8 @@ transform = transforms.Compose([
 ])
 
 # 加载 MNIST 数据集
-train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-test_dataset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+train_dataset = datasets.MNIST(root='./PyTorchDataset', train=True, download=True, transform=transform)
+test_dataset = datasets.MNIST(root='./PyTorchDataset', train=False, download=True, transform=transform)
 
 # 创建数据加载器
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
